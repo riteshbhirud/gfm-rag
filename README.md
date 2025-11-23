@@ -476,7 +476,7 @@ If you find this repository helpful, please consider citing our paper:
 @article{luo2025gfmrag,
   title={GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation},
   author={Luo, Linhao and Zhao, Zicheng and Haffari, Gholamreza and Phung, Dinh and Gong, Chen and Pan, Shirui},
-  journal={arXiv preprint arXiv:2502.01113},
+  journal={NeurIPS 2025},
   year={2025}
 }
 ```
