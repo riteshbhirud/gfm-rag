@@ -202,7 +202,7 @@ def generalized_rspmm(
     )
 
 
-def load_extension(name, sources, extra_cflags=None, extra_cuda_cflags=None, **kwargs):
+def load_extension(name, sources, extra_cflags=None, extra_cuda_cflags=None, extra_ldflags=None, **kwargs):
     if extra_cflags is None:
         extra_cflags = ["-Ofast"]
         # PyTorch 2.2.1+ on Apple Silicon is now compiled by default with OpenMP
@@ -214,6 +214,9 @@ def load_extension(name, sources, extra_cflags=None, extra_cuda_cflags=None, **k
             extra_cflags += ["-fopenmp", "-DAT_PARALLEL_OPENMP"]
         else:
             extra_cflags.append("-DAT_PARALLEL_NATIVE")
+        
+    if extra_ldflags is None:
+        extra_ldflags = ["/NODEFAULTLIB:libcmt.lib"]
     if extra_cuda_cflags is None:
         if torch.cuda.is_available():
             extra_cuda_cflags = ["-O3"]
@@ -225,7 +228,8 @@ def load_extension(name, sources, extra_cflags=None, extra_cuda_cflags=None, **k
                     new_sources.append(source)
             sources = new_sources
 
-    return cpp_extension.load(name, sources, extra_cflags, extra_cuda_cflags, **kwargs)
+    return cpp_extension.load(name, sources, extra_cflags, extra_cuda_cflags, extra_ldflags=extra_ldflags, **kwargs)
+
 
 
 print("Load rspmm extension. This may take a while...")
